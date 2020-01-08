@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:50:43 by hyu               #+#    #+#             */
-/*   Updated: 2019/12/21 21:43:18 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/07 09:58:38 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "fdf.h"
 #include "minilibx/mlx.h"
 #include <math.h>
+#define PI 3.14159265
 
 int		x_dimensions(char *tile)
 {
@@ -128,178 +129,46 @@ t_point *coordinate(int **map, t_point size)
 	return (coord);
 }
 
-double	entry_sum(int i, int j, double **matrix1, double **matrix2)
-{
-	double	sum;
-	int		k;
-
-	sum = 0;
-	k = 0;
-	while (matrix1[j][k] && matrix2[k][i])
-	{
-		sum = sum + (matrix1[j][k]) * (matrix2[k][i]);
-		k++;
-	}
-	return (sum);
-}
-
-double	**multiply_matrix(double **matrix1, double **matrix2, t_point m1, t_point m2)
-{
-	int	column;
-	int rows;
-	int	i;
-	int	j;
-	double	**rmatrix;
-	double	sum;
-
-	column = m2.x;
-	//ft_putnbr(column);
-	//ft_putchar('\n');
-	rows = m1.y;
-	//ft_putnbr(rows);
-	i = 0;
-	j = 0;
-
-	rmatrix = (double**)malloc((rows + 1) * sizeof(double*));
-
-	while (j < rows)
-	{
-		rmatrix[j] = (double*)malloc((column + 1) * sizeof(double));
-		j++;
-	}
-
-	j = 0;
-	while (j < rows)
-	{
-		i = 0;
-		while (i < column)
-		{
-			rmatrix[j][i] = entry_sum(i, j, matrix1, matrix2);
-			i++;
-		}
-		j++;
-	}
-	return (rmatrix);
-}
-
-void	convert_coordinate(t_point *coordinate)
-{
-	double	**matrix1;
-	double	**matrix2;
-	double	**matrix;
-	double	**output;
-	int		i;
-
-	i = 0;
-	matrix1 = (double**)malloc((3) * sizeof(double*));
-    matrix2 = (double**)malloc((3) * sizeof(double*));
-	matrix = (double**)malloc((3) * sizeof(double*));
-	while (i < 3)
-	{
-		matrix1[i] = (double*)malloc((1) * sizeof(double));
-        matrix2[i] = (double*)malloc((1) * sizeof(double));
-		matrix[i] = (double*)malloc(sizeof(double));
-		i++;
-	}
-
-	double      a;
-    double      b;
-
-    a = 35;
-    b = 45;
-
-	matrix1[0][0] = 1;
-    matrix1[0][1] = 0;
-    matrix1[0][2] = 0;
-    matrix1[1][0] = 0;
-    matrix1[1][1] = cos(a);
-    matrix1[1][2] = sin(a);
-    matrix1[2][0] = 0;
-    matrix1[2][1] = -sin(a);
-    matrix1[2][2] = cos(a);
-
-    matrix2[0][0] = cos(b);
-    matrix2[0][1] = 0;
-    matrix2[0][2] = -sin(b);
-    matrix2[1][0] = 0;
-    matrix2[1][1] = 1;
-    matrix2[1][2] = 0;
-    matrix2[2][0] = sin(b);
-    matrix2[2][1] = 0;
-    matrix2[2][2] = cos(b);
-
-	/*convert t_point to double matrix*/
-	matrix[0][0] = coordinate->x;
-	matrix[1][0] = coordinate->y;
-	matrix[2][0] = coordinate->z;
-
-	/*get matrix dimensions*/
-
-	t_point m1;
-    t_point m2;
-	t_point m3;
-
-    m1.x = 3;
-    m1.y = 3;
-    m2.x = 1;
-    m2.y = 3;
-	m3.x = 3;
-	m3.y = 1;
-
-	output = multiply_matrix(matrix2, matrix, m1, m2);
-	output = multiply_matrix(matrix1, output, m1, m2);
-	coordinate->x = output[0][0];
-	coordinate->y = output[1][0];
-	//coordinate->z = output[2][0];
-
-	return;
-}
-
-void    pixel_display(t_point *array, t_point size)
+void    pixel_ray_trace(t_point *array, t_point size, t_point window_size)
 {
     void    *mlx_ptr;
     void    *win_ptr;
-	int		length;
-    int     i;
+
+    int slope;
+    int y_0;
+    int x_0;
+    int x_f;
+
+    int i;
+	int	length;
 
     i = 0;
 	length = size.x * size.y + 1;
+
+    slope = (array[i + 1].y - array[i].y)/(array[i + 1].x - array[i].x);
+    y_0 = (window_size.y)*(array[i].y)/size.y;
+    x_0 = (window_size.x)*(array[i].x)/size.x;
+    x_f = (window_size.x)*(array[i].x)/size.x;
+
     mlx_ptr = mlx_init();
-    win_ptr = mlx_new_window(mlx_ptr, 500, 500, "New_Window");
-	
-    while (i < length)
-    {
-		convert_coordinate(&array[i]);
-		mlx_pixel_put(mlx_ptr, win_ptr, (500/size.x)*array[i].x, (500/size.y)*array[i].y, 0xFFFFFF);
-        i++;
+    win_ptr = mlx_new_window(mlx_ptr, window_size.x, window_size.y, "New Window");
+	while (i < length - 1)
+	{
+		slope = (array[i + 1].y - array[i].y)/(array[i + 1].x - array[i].x);
+		y_0 = (window_size.y)*(array[i].y)/size.y;
+		x_0 = (window_size.x)*(array[i].x)/size.x;
+		x_f = (window_size.x)*(array[i + 1].x)/size.x;
+		while (x_0 < x_f)
+		{
+			mlx_pixel_put(mlx_ptr, win_ptr, x_0, y_0, 0xFFFFFF);
+			x_0++;
+			y_0 = y_0 + slope;
+		}
+		i++;
 	}
-	mlx_loop(mlx_ptr);
+
+    mlx_loop(mlx_ptr);
 }
-
-/*int		**glOrtho(int *r, int *l, int *t, int *b, int *f, int *n)
-{
-	int		Matrix[4][4];
-
-	Matrix[0][0] = 2 / (*r - *l);
-	Matrix[0][1] = 0;
-	Matrix[0][2] = 0;
-	Matrix[0][3] = -(*r + *l)/(*r - *l);
-	Matrix[1][0] = 0;
-	Matrix[1][1] = 2 / (*t - *b);
-	Matrix[1][2] = 0;
-	Matrix[1][3] = -(*t + *b)/(*t - *b);
-	Matrix[2][0] = 0;
-	Matrix[2][1] = 0;
-	Matrix[2][2] = -2/(*f - *n);
-	Matrix[2][3] = -(*f + *n)/(*f - *n);
-	Matrix[3][0] = 0;
-	Matrix[3][1] = 0;
-	Matrix[3][2] = 0;
-	Matrix[3][3] = 1;
-
-	return (Matrix);
-}
-*/
 
 /*void	glOrtho(int *r, int *l, int *t, int *b, int *f, int *n, t_lpoint Matrix)
 {
@@ -321,6 +190,29 @@ void    pixel_display(t_point *array, t_point size)
     Matrix.x3[3] = 1;
 }
 */
+
+void	isometric_rotate(t_point *coord, double angle, double angle2, t_point dimensions)
+{
+	int		i;
+	int		length;
+	int	bx;
+	int by;
+	int bz;
+
+	i = 0;
+	length = (dimensions.x) * (dimensions.y) + 1;
+
+	while (i < length)
+	{
+		bx = (coord[i].x) * (cos(angle*PI/180)) - (coord[i].z)*sin(angle*PI/180);
+		by = coord[i].y;
+		bz = (coord[i].x) * (sin(angle*PI/180)) + (coord[i].z) * cos(angle*PI/180);
+		coord[i].x = bx;
+		coord[i].y = by * cos(angle2*PI/180) + bz * sin(angle2*PI/180);
+		coord[i].z = -by * sin(angle2*PI/180) + bz * cos(angle2*PI/180);
+		i++;
+	}
+}
 
 int		main(void)
 {
@@ -377,9 +269,9 @@ int		main(void)
 	t_point *coord;
 
 	coord = coordinate(map, dimensions);
-	ft_putnbr(dimensions.x);
-	ft_putchar('\n');
-	ft_putnbr(dimensions.y);
+	//ft_putnbr(dimensions.x);
+	//ft_putchar('\n');
+	//ft_putnbr(dimensions.y);
 	//ft_putchar('\n');
 	//ft_putnbr(coord[3].y);
 	
@@ -388,15 +280,28 @@ int		main(void)
 	length = dimensions.x * dimensions.y + 1;
 	ft_putnbr(length);
 
-	//pixel_display(coord, dimensions);
+//	pixel_display(coord, dimensions);
 
-	/*void		*mlx_ptr;
+	void		*mlx_ptr;
 	void		*window_ptr;
 
-	mlx_ptr = mlx_init();
-	window_ptr = mlx_new_window(mlx_ptr, 500, 500, "New_Window");
-	mlx_loop(mlx_ptr);*/
-	//coordinate_change(coord, dimensions);
-	pixel_display(coord, dimensions);
+	//mlx_ptr = mlx_init();
+	//window_ptr = mlx_new_window(mlx_ptr, 500, 500, "New_Window");
+	//mlx_loop(mlx_ptr);
+	//
+	double  angle;
+    double  angle2;
+
+    angle = 15.0;
+    angle2 = 15.0;
+	//isometric_rotate( coord, angle, angle2, dimensions);
+
+	//pixel_display(coord, dimensions);
+	t_point window_size;
+
+	window_size.x = 500;
+	window_size.y = 500;
+
+	pixel_ray_trace(coord, dimensions, window_size);
 	return (0);
 }
