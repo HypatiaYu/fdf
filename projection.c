@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 17:14:38 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/07 18:24:06 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/09 20:06:27 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ double	**multiply_matrix(double **matrix1, double **matrix2, t_point m1, t_point
 	double	sum;
 
 	column = m2.x;
-	//ft_putnbr(column);
-	//ft_putchar('\n');
 	rows = m1.y;
-	//ft_putnbr(rows);
 	i = 0;
 	j = 0;
 
