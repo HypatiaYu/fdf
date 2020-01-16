@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:50:43 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/15 17:19:31 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/16 15:05:59 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,58 @@ void		skipletter(char *tile, int *i)
 		*i = *i + 1;
 }
 
-void	ft_space(char *str, int *i, int *j)
+void    assign_hex(t_fpoint *node, char *str, int *i)
 {
-	while (str[*i] != '\0' && (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n'))
-	{
-		if (str[*i] == '\n')
-		{
-			ft_putnbr(*j);
-			*j = *j + 1;
-		}
-	*i = *i + 1;
-	}
-}
+    int num;
 
-void	ft_word(char *str, int *i, int *k)
-{
-	while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\t' && str[*i] != '\n')
-		*i = *i + 1;
-	*k = *k + 1;
-}
+    num = 0;
 
-int		ft_word_check(char *str, int *i, int *k, t_point *dimensions, int *j)
-{
-	int	j_initial;
-	int	initial;
-
-	initial = *k;
-	j_initial = *j;
-	while (str[*i] != '\0' && *j < j_initial + 1)
+    if (str[*i] == ',')
+        *i = *i + 1;
+    while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\t')
     {
-		ft_word(str, i, k);
-		ft_space(str, i, j);
-	}
-	if (*k - initial == dimensions->x)
-		return (1);
-	else
-		return (0);
+        num = num*10 + str[*i] + '0';
+        *i = *i + 1;
+    }
+    node->hex = num;
 }
 
+void     ft_ishex(char *str, t_fpoint *begin)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == ',')
+		{
+			assign_hex(begin, str, &i);
+		}
+		i = i + 1;
+	}
+	//return (0);
+	//if (str[i] == ',' && str[i + 1] == '0' && str[i + 2] == 'x')
+       //return (1);
+    //return (0);
+}
+
+/*
+void	assign_hex(t_fpoint *node, char *str, int *i)
+{
+	int num;
+
+	num = 0;
+
+	if (str[*i] == ',')
+		*i = *i + 1;
+	while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\t')
+	{
+		num = num*10 + str[*i] + '0';
+		*i = *i + 1;
+	}
+	node->hex = num;
+}
+*/
 int		ft_numword(char *str, t_point *dimensions)
 {
 	int	i;
@@ -95,10 +109,18 @@ int		ft_numword(char *str, t_point *dimensions)
 	return (k);
 }
 
+/*
 char	**ft_split(char *str, t_point *dimensions)
 {
 	char **array;
 	int		words;
+	t_fpoint	*iterate;
+
+	iterate->x = 0;
+	iterate->y = 0;
+	iterate->z = 0;
+	
+	
 	int		i;
 	int		j;
 	int		k;
@@ -126,7 +148,47 @@ char	**ft_split(char *str, t_point *dimensions)
 	array[words] = NULL;
 	return (array);
 }
+*/
 
+
+char    **ft_split(char *str, t_point *dimensions)
+{
+    char **array;
+    int     words;
+    t_fpoint    *iterate;
+
+    iterate->x = 0;
+    iterate->y = 0;
+    iterate->z = 0;
+
+
+    /*int     i;
+    int     j;
+    int     k;*/
+    int     l;
+
+    dimensions->valid = 1;
+    dimensions->word = 0;
+    words = ft_numword(str, dimensions);
+    /*i = 0;
+    j = 0;
+    k = 0;*/
+    l = 0;
+    array = (char**)malloc((words + 1)* sizeof(char*));
+    ft_space(str, &iterate->x, &iterate->y);
+    while (l < words)
+    {
+        array[l] = &str[iterate->x];
+        l++;
+        ft_word(str, &iterate->x, &iterate->z);
+        str[iterate->x] = '\0';
+        iterate->x = iterate->x + 1;
+        ft_space(str, &iterate->x, &iterate->z);
+    }
+
+    array[words] = NULL;
+    return (array);
+}
 
 t_fpoint    *create_fpoint_node(int x, int y, int z)
 {
@@ -143,87 +205,221 @@ t_fpoint    *create_fpoint_node(int x, int y, int z)
 
 t_fpoint	*ft_listadd_2(t_point *size, char **str)
 {
-	int i;
-	int j;
-	int k;
+	t_fpoint	iterate;
 	t_fpoint *new;
 	t_fpoint *node;
 	t_fpoint *start;
+	iterate.x = 0;
+	iterate.y = 0;
+	iterate.z = 0;
 
-	i = 0;
-	j = 0;
-	k = 0;
-
-	node = create_fpoint_node(i, j, ft_atoi(str[k]));
+	node = create_fpoint_node(iterate.x, iterate.y, ft_atoi(str[iterate.z]));
 	start = node;
 	new = node;
-	
-	ft_putstr("new");
-	ft_putnbr(start->x);
 	new->next = NULL;
-	i = 0;
-	while (i <= size->x - 1)
+	
+	while (iterate.x <= size->x - 1)
 	{
-		node = create_fpoint_node(i, j, ft_atoi(str[k]));
-		ft_putstr("new");
-		ft_putnbr(new->x);
+		node = create_fpoint_node(iterate.x, iterate.y, ft_atoi(str[iterate.z]));
+		ft_ishex(str[iterate.z], node);
 		new->next = node;
 		new = new->next;
-		ft_putchar('k');
-		ft_putnbr(k);
-		k++;
-		i++;
+		iterate.z = iterate.z + 1;
+		iterate.x = iterate.x + 1;
 	}
-	j++;
-	while (j <= size->y && k < size->word - 1)
+	iterate.y = iterate.y + 1;
+	while (iterate.y <= size->y && iterate.z < size->word - 1)
 	{
-		i = 0;
-		while (i <= size->x - 1 && k < size->word)
+		iterate.x = 0;
+		while (iterate.x <= size->x - 1 && iterate.z < size->word)
 		{
-			node = create_fpoint_node(i, j, ft_atoi(str[k]));
+			node = create_fpoint_node(iterate.x, iterate.y, ft_atoi(str[iterate.z]));
 			new->next = node;
 			new = new->next;
-			ft_putchar('k');
-			ft_putnbr(k);
-			k++;
-			i++;
+			iterate.z = iterate.z + 1;
+			iterate.x = iterate.x + 1;
 		}
-		j++;
+		iterate.y = iterate.y + 1;
 	}
 	new->next = NULL;
-	ft_putstr("begin");
 	return (start);
 }
 
-int     deal_key(int key, void *param, void *mlx_ptr, void *win_ptr, t_scaler *scaler, t_fpoint *begin)
+int		deal_key(int key, t_scaler *pointer)
 {
 
-    if (key == ESC)
-    {
-        mlx_destroy_window(mlx_ptr, win_ptr);
-        free(mlx_ptr);
-        free(win_ptr);
-		free(begin);
+	if (key == ESC)
+	{
 		exit(0);
-        //free_n_exit(mlx_ptr);
-        //exit(0);
-        return (0);
-        //ft_putchar('a');
-    }
+	}
 
-    if (key == KEY_1)
+	if (key == KEY_1)
+	{
+		mlx_new_window(pointer->mlx, 500, 500, "Window 2");
+	}
+
+
+	if (key == KEY_A)
+	{
+		mlx_clear_window(pointer->mlx, pointer->win);
+		pointer->x_trans = 10;
+		ft_list_frch_scale(pointer->begin, translation_x, pointer);
+		ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+	}
+	if (key == KEY_B)
+	{
+		mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->x_trans = -10;
+        ft_list_frch_scale(pointer->begin, translation_x, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+	}
+	if (key == KEY_C)
+	{
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->y_trans = 10;
+        ft_list_frch_scale(pointer->begin, translation_y, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_D)
     {
-        mlx_new_window(mlx_ptr, 500, 500, "Window 2");
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->y_trans = -10;
+        ft_list_frch_scale(pointer->begin, translation_y, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
     }
-
-
-    if (key == KEY_2)
+	if (key == KEY_E)
     {
-        mlx_clear_window(mlx_ptr, win_ptr);
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->z_trans = 10;
+        ft_list_frch_scale(pointer->begin, translation_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
     }
-    else
-        ft_putchar('b');
-    return (0);
+	if (key == KEY_F)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->z_trans = -10;
+        ft_list_frch_scale(pointer->begin, translation_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_G)
+	{
+        mlx_clear_window(pointer->mlx, pointer->win);
+		pointer->angle = 10;
+		pointer->angle2 = 10;
+        ft_list_frch_scale(pointer->begin, rotate_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_H)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+        ft_list_frch_scale(pointer->begin, rotate_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_I)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = pointer->angle + 10;
+        pointer->angle2 = pointer->angle2 + 10;
+        ft_list_frch_scale(pointer->begin, rotate_y, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_J)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+        ft_list_frch_scale(pointer->begin, rotate_y, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+    if (key == KEY_K)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = 10;
+        pointer->angle2 = 10;
+        ft_list_frch_scale(pointer->begin, rotate_x, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_L)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+        ft_list_frch_scale(pointer->begin, rotate_x, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_M)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+		ft_list_frch_scale(pointer->begin, isometric_rotate, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_N)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+		ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_bigger, pointer);
+		ft_list_frch_scale(pointer->begin, center, pointer);
+		ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_O)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+		ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_smaller, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_P)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+		ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_wider, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_R)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+		ft_list_frch_scale(pointer->begin, un_center, pointer);
+		ft_list_frch_scale(pointer->begin, make_skinnier, pointer);
+		ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_S)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+		ft_list_frch_scale(pointer->begin, un_center, pointer);
+		ft_list_frch_scale(pointer->begin, make_taller, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	if (key == KEY_T)
+    {
+        mlx_clear_window(pointer->mlx, pointer->win);
+		ft_list_frch_scale(pointer->begin, un_center, pointer);
+		ft_list_frch_scale(pointer->begin, make_shorter, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+    }
+	/*this needs work*/
+	/*
+	if (key == KEY_I)
+	{
+		mlx_clear_window(pointer->mlx, pointer->win);
+		pointer->angle = 0;
+		pointer->angle2 = 0;
+		pointer->x_trans = 0;
+		pointer->y_trans = 0;
+		pointer->begin = pointer->head;
+		ray_iterator(pointer->begin, *pointer->size, pointer->mlx, pointer->win);
+	}*/
+	else
+		ft_putchar('b');
+	return (0);
 }
 
 int		main(void)
@@ -233,7 +429,7 @@ int		main(void)
 	char	*tile;
 	char 	*tile2;
 
-	fd = open("test_maps/test_maps/42.fdf", O_RDONLY);
+	fd = open("test_maps/test_maps/pyramide.fdf", O_RDONLY);
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (tile == NULL)
@@ -250,39 +446,24 @@ int		main(void)
 	int		i;
 
 	i = 0;
-	ft_putchar('a');
-
 	dimensions = malloc(sizeof(t_point));
 
 	split = ft_split(tile, dimensions);
+	if (dimensions->valid == 0)
+	{
+		ft_putstr("Invalid Input");
+		return (0);
+	}	
 
 	t_fpoint *begin;
 	t_fpoint *head;
 
 	begin = malloc(sizeof(t_fpoint));
-	head = begin;
-	
+	head = begin;	
 	begin = ft_listadd_2(dimensions, split);
-	
-	ft_putstr("begin->x");
-	ft_putnbr(begin->x);
-
-	ft_putchar('\n');
-
-	i = 0;
-	
 	y_list_iterator(begin, *dimensions);
-	ft_putchar('x');
-	ft_putnbr(dimensions->x);
-	ft_putchar('x');
-	ft_putchar('y');
-	ft_putnbr(dimensions->y);
-	ft_putchar('y');
-	//ft_putnbr(head->x);
-	ft_putchar('x');
 
 	i = 0;
-
 	void    *mlx_ptr;
     void    *win_ptr;
 	t_point window_size;
@@ -291,41 +472,35 @@ int		main(void)
     window_size.y = 500;
     mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, window_size.x, window_size.y, "New Window");
-	ft_putstr("start");
-	ft_putnbr(begin->x);
-	ft_putstr("start");
-	
 	int scaler;
     double  ar;
     t_scaler *scale;
-    scaler = 10;
+    scaler = 3;
     window_size.x = 500;
     window_size.y = 500;
     ar = 1;
 
 	scale = ft_scaling(*dimensions, window_size, scaler, ar);
 	ft_list_frch_scale(begin, x_scale, scale);
-	scale->angle = 40;
-	scale->angle2 = -50;
-	ft_list_frch_scale(begin, rotate_y, scale);
-	ft_putstr("dimensions");
-	ft_putnbr(dimensions->y);
+	
+	scale->angle = 30;
+	scale->angle2 = 40;
 	scale->x_trans = 0;
 	scale->y_trans = 0;
+	scale->z_trans = 0;
+	scale->begin = begin;
+	scale->head = head;
+	scale->scale = 3;
 	ft_list_frch_scale(begin, center, scale);
-	//pixel_ray_trace(begin, begin->nexty, mlx_ptr, win_ptr);
+	ft_putstr("begin");
+	ft_putnbr(begin->x);
+	
+	scale->mlx = mlx_ptr;
+	scale->win = win_ptr;
+	scale->size = dimensions;
 	ray_iterator(begin, *dimensions, mlx_ptr, win_ptr);
-	//scale->x_trans = 200;
-	//scaler = 30;
-	//mlx_new_window(mlx_ptr, 500, 500, "Window 2");
-	//ft_list_frch_scale(begin, x_scale, scale);
-	mlx_key_hook(win_ptr, deal_key, (void *)0);
+	mlx_key_hook(scale->win, deal_key, scale);
 	mlx_loop(mlx_ptr);
 
-	//int scaler;
-
-	//scaler = 100;
-    //ft_list_frch(ptra, x_scale, scaler);
-	
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 21:29:50 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/15 17:08:27 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/16 14:43:02 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	y_list_iterator(t_fpoint *begin, t_point size)
 	i = 0;
 	y_listadd(start, size);
 	i++;
-	while(i <= size.x)
+	while (i <= size.x)
 	{
 		start = start->next;
 		y_listadd(start, size);

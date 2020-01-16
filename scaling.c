@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 09:59:39 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/15 15:06:01 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/16 13:07:40 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,19 @@ void        center(t_fpoint *list, t_scaler *scaler)
 	list->y = list->y + center_y - (scaler->y_dim) * (scaler->scale)/(scaler->aspect_ratio * 2) + scaler->y_trans;
 }
 
-void	translation(t_scaler *scaler, int x, int y)
+void	translation_x(t_fpoint *list, t_scaler *scaler)
 {
-	scaler->x_trans = x;
-	scaler->y_trans = y;
+	list->x = list->x + scaler->x_trans;
+}
+
+void    translation_y(t_fpoint *list, t_scaler *scaler)
+{
+    list->y = list->y + scaler->y_trans;
+}
+
+void    translation_z(t_fpoint *list, t_scaler *scaler)
+{
+    list->z = list->z + scaler->z_trans;
 }
 
 void	x_scale(t_fpoint *begin, t_scaler *scaler)

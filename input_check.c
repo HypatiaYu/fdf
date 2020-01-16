@@ -6,83 +6,56 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 12:02:35 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/10 22:02:02 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/16 14:47:06 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "keys.h"
 
-int		search_space(t_point dimensions, char *tile, int *i)
+
+void    ft_space(char *str, int *i, int *j)
 {
-	int	j;
-	int	k;
-
-	j = 0;
-	k = 0;
-
-	if (tile[*i] == '-' || tile[*i] == '+')
-            *i = *i + 1;
-	if (tile[*i] >= '0' && tile[*i] <= '9')
-	{
-		k++;
-	}
-	while (tile[*i] >= '0' && tile[*i] <= '9')
-            *i = *i + 1;
-	while (tile[*i] == ' '|| tile[*i] == '\t')
-            *i = *i + 1;
-	while (tile[*i] && tile[*i] != '\n')
-	{
-		if (tile[*i] == '-' || tile[*i] == '+')
-			*i = *i + 1;
-		if (tile[*i] >= '0' && tile[*i] <= '9')
-		{
-			k++;
-		}
-		else
-			break;
-		while (tile[*i] >= '0' && tile[*i] <= '9')
-			*i = *i + 1;
-		while (tile[*i] == ' '|| tile[*i] == '\t')
-            *i = *i + 1;
-	}
-	if (k == dimensions.x)
-		return (1);
-	else
-		return (0);
+    while (str[*i] != '\0' && (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n'))
+    {
+        if (str[*i] == '\n')
+        {
+            ft_putnbr(*j);
+            *j = *j + 1;
+        }
+    *i = *i + 1;
+    }
 }
 
-int		search_iterator(t_point dimensions, char *tile)
+void    ft_word(char *str, int *i, int *k)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (search_space(dimensions, tile, &i) == 1)
-	{
-		ft_putchar('s');
-		/*ft_putnbr(search_space(dimensions, tile, &i));
-		ft_putchar(tile[i]);
-		ft_putnbr(i);
-		i++;*/
-		/*
-		
-		if (search_space(dimensions, tile, &i) == 1)
-		{
-			ft_putnbr(j);
-			ft_putnbr(i);
-			j++;
-		}*/
-		j++;
-		i++;
-	}
-	ft_putchar('j');
-	ft_putchar('\n');
-	ft_putnbr(j);
-	ft_putchar('\n');
-	ft_putnbr(dimensions.y);
-	ft_putchar('\n');
-	if (j == dimensions.y)
-		return (1);
-	return (0);
+    while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\t' && str[*i] != '\n')
+        *i = *i + 1;
+    *k = *k + 1;
 }
+
+/*int		ft_ishex(char *str, int *i)
+{
+	if (str[*i] == ',' && str[*i + 1] == '0' && str[*i + 2] == 'x')
+	   return (1);
+	return (0);	
+}*/
+
+int     ft_word_check(char *str, int *i, int *k, t_point *dimensions, int *j)
+{
+    int j_initial;
+    int initial;
+
+    initial = *k;
+    j_initial = *j;
+    while (str[*i] != '\0' && *j < j_initial + 1)
+    {
+        ft_word(str, i, k);
+        ft_space(str, i, j);
+    }
+    if (*k - initial == dimensions->x)
+        return (1);
+    else
+        return (0);
+}
+

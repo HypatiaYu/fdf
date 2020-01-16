@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 11:50:13 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/15 14:59:13 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/16 14:57:03 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void    pixel_ray_trace(t_fpoint *start, t_fpoint *stop, void *mlx_ptr, void *wi
 	{
 		while ((start->y + i) < stop->y)
 			{
-				mlx_pixel_put(mlx_ptr, win_ptr, start->x, start->y + i, 0xFFFFFF);
+				if (start->hex)
+					mlx_pixel_put(mlx_ptr, win_ptr, start->x, start->y + i, start->hex);
+				else
+					mlx_pixel_put(mlx_ptr, win_ptr, start->x, start->y + i, 0xFFFFFF);
 				i++;
 			}		
 	}
@@ -30,7 +33,10 @@ void    pixel_ray_trace(t_fpoint *start, t_fpoint *stop, void *mlx_ptr, void *wi
 	{
 		while (start->x + i < stop->x)
 		{
-			mlx_pixel_put(mlx_ptr, win_ptr, start->x + i, start->y, 0xFFFFFF);
+			if (start->hex)
+				mlx_pixel_put(mlx_ptr, win_ptr, start->x + i, start->y, start->hex);
+			else
+				mlx_pixel_put(mlx_ptr, win_ptr, start->x + i, start->y, 0xFFFFFF);
 			i++;
 		}
 	}
@@ -40,7 +46,10 @@ void    pixel_ray_trace(t_fpoint *start, t_fpoint *stop, void *mlx_ptr, void *wi
 		while ((start->x + i) < stop->x)
 		{
 			y = start->y + ((stop->y - start->y)/(stop->x - start->x)) * i;
-			mlx_pixel_put(mlx_ptr, win_ptr, start->x + i, y, 0xFFFFFF);
+			if (start->hex)
+				mlx_pixel_put(mlx_ptr, win_ptr, start->x + i, y, start->hex);
+			else
+				mlx_pixel_put(mlx_ptr, win_ptr, start->x + i, y, 0xFFFFFF);
 			i++;
 		}
 	}
