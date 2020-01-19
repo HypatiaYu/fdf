@@ -6,66 +6,230 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 17:59:50 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/16 11:33:43 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/19 15:17:01 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "keys.h"
 
-//void *mlx_ptr;
-
-int		deal_key(int key, t_scaler *pointer)//void *param, void *mlx_ptr, void *win_ptr, t_scaler *scaler)
+void	translate_x_mlx(t_scaler *pointer)
 {
-	
-	if (key == ESC)
-	{
-		exit(0);
-		/*mlx_destroy_window(mlx_ptr, win_ptr);
-		free(mlx_ptr);
-		free(win_ptr);
-		//free_n_exit(mlx_ptr);
-		exit(0);
-		return (0);*/
-		//ft_putchar('a');
-	}
-	
-	else if (key == KEY_1)
-	{
-		mlx_new_window(pointer->mlx, 500, 500, "Window 2");
-	}
-
-	
-	else if (key == KEY_A)
-	{
-		mlx_clear_window(pointer->mlx, pointer->win);
-	}
-	else
-		ft_putchar('b');
-	return (0);
+	mlx_clear_window(pointer->mlx, pointer->win);
+    pointer->x_trans = 10;
+    ft_list_frch_scale(pointer->begin, translation_x, pointer);
+    ray_iterator(pointer->begin, *pointer->size, pointer);
 }
 
-int		main(void)
+void	translate_mx_mlx(t_scaler *pointer)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_scaler	*pointer;
+	 mlx_clear_window(pointer->mlx, pointer->win);
+	 pointer->x_trans = -10;
+	 ft_list_frch_scale(pointer->begin, translation_x, pointer);
+	 ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    translate_y_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+	pointer->y_trans = 10;
+	ft_list_frch_scale(pointer->begin, translation_y, pointer);
+	ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    translate_my_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+	pointer->y_trans = -10;
+	ft_list_frch_scale(pointer->begin, translation_y, pointer);
+	ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    translate_z_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->z_trans = 10;
+        ft_list_frch_scale(pointer->begin, translation_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
 
 
-	t_point data;
+void    translate_mz_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->z_trans = -10;
+        ft_list_frch_scale(pointer->begin, translation_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
 
-	pointer = malloc(sizeof(t_scaler));
 
-	
+void    translate_rotz_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = 10;
+        pointer->angle2 = 10;
+        ft_list_frch_scale(pointer->begin, rotate_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
 
-	mlx_ptr = mlx_init();
-	pointer->mlx = mlx_ptr;
-	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "New Window");
-	pointer->win = win_ptr;
-	mlx_pixel_put(pointer->mlx, pointer->win, 250, 250, 0xFFFFFF);
-	//mlx_clear_window(mlx_ptr, win_ptr);
-	mlx_key_hook(win_ptr, deal_key, pointer);
-	//key_hook((void*)0, mlx_ptr, win_ptr);
-	mlx_loop(mlx_ptr);
+
+void    rotate_mz_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+        ft_list_frch_scale(pointer->begin, rotate_z, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+
+void    rotate_y_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = 10;
+        pointer->angle2 = 10;
+        ft_list_frch_scale(pointer->begin, rotate_y, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    rotate_my_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+        ft_list_frch_scale(pointer->begin, rotate_y, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    rotate_x_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = -10;
+        pointer->angle2 = -10;
+        ft_list_frch_scale(pointer->begin, rotate_x, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    make_bigger_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_bigger, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    make_smaller_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_smaller, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    make_wider_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_wider, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+
+void    make_skinnier_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_skinnier, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+void    make_taller_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_taller, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+
+void    make_shorter_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, make_shorter, pointer);
+        ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+
+
+void    perspective_mlx(t_scaler *pointer)
+{
+	mlx_clear_window(pointer->mlx, pointer->win);
+        pointer->angle = 15;
+        pointer->angle2 = 25;
+
+        //ft_list_frch_scale(pointer->begin, un_center, pointer);
+        ft_list_frch_scale(pointer->begin, perspective_projection, pointer);
+        //ft_list_frch_scale(pointer->begin, center, pointer);
+        ray_iterator(pointer->begin, *pointer->size, pointer);
+}
+/*
+void    translate_mx_mlx(t_scaler *pointer)
+{
+}*/
+
+/*
+void    translate_mx_mlx(t_scaler *pointer)
+{
+}*/
+int		deal_key(int key, t_scaler *pointer)
+{
+	void 	(*ptr)(t_scaler *);
+	if (key == ESC)
+		exit(0);
+	if (key == KEY_A)
+		ptr = &translate_x_mlx;
+	if (key == KEY_B)
+		ptr = &translate_mx_mlx;
+	if (key == KEY_C)
+		ptr = &translate_y_mlx;
+	if (key == KEY_D)
+		ptr = &translate_my_mlx;
+	if (key == KEY_G)
+		ptr = &translate_rotz_mlx;
+	if (key == KEY_H)
+		ptr = &rotate_mz_mlx;
+	if (key == KEY_I)
+		ptr = &rotate_y_mlx;
+	if (key == KEY_J)
+		ptr = &rotate_my_mlx;
+	if (key == KEY_L)
+		ptr = &rotate_x_mlx;
+	if (key == KEY_M)
+	{
+		mlx_clear_window(pointer->mlx, pointer->win);
+		pointer->angle = 35;
+		pointer->angle2 = 45;
+		ft_list_frch_scale(pointer->begin, isometric_rotate, pointer);
+		ray_iterator(pointer->begin, *pointer->size, pointer);
+	}
+	if (key == KEY_N)
+		ptr = &make_bigger_mlx;
+	if (key == KEY_O)
+		ptr = &make_smaller_mlx;
+	if (key == KEY_P)
+		ptr = &make_wider_mlx;
+	if (key == KEY_R)
+		ptr = &make_skinnier_mlx;
+	if (key == KEY_S)
+		ptr = &make_taller_mlx;
+	if (key == KEY_T)
+		ptr = &perspective_mlx;
+	ptr(pointer);
 	return (0);
 }
