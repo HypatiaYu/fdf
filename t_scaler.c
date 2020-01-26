@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 10:07:21 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 12:21:04 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 14:12:28 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void        graphics_display(t_point *dimensions, t_fpoint *begin)
     dimensions->win = win_ptr;
 	ft_list_frch_scale(begin, re_scale, dimensions);
 	ft_list_frch_scale(begin, center, dimensions);
+	dimensions->x_trans = 300;
+	ft_list_frch_scale(begin, translation_xyz, dimensions);
 	//ft_list_frch_scale(begin, un_center, dimensions);
 	ray_iterator(begin, dimensions);
     mlx_loop(mlx_ptr);

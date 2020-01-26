@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 12:18:27 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 14:12:48 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void            re_scale(t_fpoint *begin, t_point *dimensions);
 void            center(t_fpoint *list, t_point *dimensions);
 void    un_center(t_fpoint *begin, t_point *dimensions);
 void	minx_miny(t_fpoint *pointer, t_point *dimensions);
+void            translation_xyz(t_fpoint *list, t_point *dimensions);
 
 char	*ft_error(char *file_name);
 char            **ft_split(char *str, t_point *dimensions);
