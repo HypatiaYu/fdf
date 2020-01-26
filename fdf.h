@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/25 19:18:28 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 10:35:58 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,31 @@ typedef	struct	s_point
 	int			y;
 	int			valid;
 	int			word;
+	int			win_x;
+	int			win_y;
+	int			x_center;
+	int			y_center;
+	double		aspect_ratio;
+	double		scale;
+	double		scalex;
+	double		scaley;
+	double		scalez;
+	int			x_trans;
+	int			y_trans;
+	int			z_trans;
+	int			min_x;
+	int			max_x;
+	int			min_y;
+	int			max_y;
+	int			min_z;
+	int			d;
+	double		angle;
+	double		angle2;
+	t_fpoint	*begin;
+	t_fpoint	*head;
+	void		*mlx;
+	void		*win;
+	int			z_avg;
 }				t_point;
 
 int     get_next_line(const int fd, char **line);
