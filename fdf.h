@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 10:41:38 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 11:00:08 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_fpoint         *ft_move_node(t_fpoint *iterate, t_point *size, char **str, t_f
 void        iterate_zero(t_fpoint *iterate);
 void        y_listadd(t_fpoint *begin, t_point *size);
 void            y_list_iterator(t_fpoint *begin, t_point *size);
+void        graphics_display(t_point *dimensions, t_fpoint *begin);
 
 char	*ft_error(char *file_name);
 char            **ft_split(char *str, t_point *dimensions);
@@ -83,6 +84,7 @@ t_fpoint        *create_fpoint_node(int x, int y, int z);
 t_fpoint        *ft_set_dimensions(char *tile, t_point *dimensions);
 t_fpoint        *x_move(t_fpoint *start, t_point *size);
 
+t_point        *ft_set_scaling(t_point *dimensions, t_fpoint *begin);
 # define BUFF_SIZE 32
 # define MAX_FD 1024 + 1
 

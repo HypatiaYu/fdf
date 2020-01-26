@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:32:29 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 10:35:04 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 11:00:32 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int		main(int argc, char **argv)
 	tile = ft_error(argv[1]);
 	begin = ft_set_dimensions(tile, dimensions);
 	y_listadd(begin, dimensions);
+	dimensions = ft_set_scaling(dimensions, begin);
+	graphics_display(dimensions, begin);
 
 	/*int i;
 
