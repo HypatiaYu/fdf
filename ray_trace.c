@@ -6,27 +6,12 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 11:50:13 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/19 15:08:28 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 12:13:35 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/*
-void		y_z_recalculate(t_fpoint *start, t_fpoint *stop)
-{
-	int z;
-	double dy;
-	double dz;
-	double	scaler;
-
-	dz = stop->z - start->z;
-	dy = stop->y - start->y;
-	scaler = sqrt(pow(dz, 2) + pow(dy, 2));
-	dz = dz / scaler;
-	dy = dy / scaler;
-
-}*/
 void		pixel_ray_trace(t_fpoint *start, t_fpoint *stop, t_scaler *pointer)
 {
 	int	i;
@@ -52,12 +37,12 @@ void		pixel_ray_trace(t_fpoint *start, t_fpoint *stop, t_scaler *pointer)
 	{
 		while ((start->y + i) < stop->y)
 		{
-			if (start->hex)
-				mlx_pixel_put(pointer->mlx, pointer->win, start->x,
-				start->y + i, start->hex);
-			else
+			if (start->hex == 0)
 				mlx_pixel_put(pointer->mlx, pointer->win, start->x,
 				start->y + i, 0xFFFFFF);
+			else
+				mlx_pixel_put(pointer->mlx, pointer->win, start->x,
+				start->y + i, start->hex);
 			i++;
 		}
 	}

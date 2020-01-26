@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 10:07:21 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 11:25:08 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 12:21:04 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_point        *ft_set_scaling(t_point *dimensions, t_fpoint *begin)
 	dimensions->scalex = 20;
 	dimensions->scaley = 20;
 	dimensions->scalez = 20;
+	dimensions->x_trans = 0;
+	dimensions->y_trans = 0;
 	return (dimensions);
 }
 
@@ -107,6 +109,8 @@ void        graphics_display(t_point *dimensions, t_fpoint *begin)
     dimensions->mlx = mlx_ptr;
     dimensions->win = win_ptr;
 	ft_list_frch_scale(begin, re_scale, dimensions);
+	ft_list_frch_scale(begin, center, dimensions);
+	//ft_list_frch_scale(begin, un_center, dimensions);
 	ray_iterator(begin, dimensions);
     mlx_loop(mlx_ptr);
 }
