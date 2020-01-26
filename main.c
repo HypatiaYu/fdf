@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:32:29 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 10:06:15 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 10:35:04 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		main(int argc, char **argv)
 	begin = ft_set_dimensions(tile, dimensions);
 	y_listadd(begin, dimensions);
 
-	int i;
+	/*int i;
 
 	i = 0;
 	
@@ -41,7 +41,7 @@ int		main(int argc, char **argv)
         ft_putnbr(begin->y);
 		begin = begin->nextx;
 		i++;
-	}
+	}*/
 	
 	//y_list_iterator(begin, dimensions);
 	//ft_putchar('e');

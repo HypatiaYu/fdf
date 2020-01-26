@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 10:35:58 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 10:41:38 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+#include "minilibx/mlx.h"
 # include "libft/libft.h"
 
 typedef struct		s_fpoint
