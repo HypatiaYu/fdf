@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 11:00:08 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 11:25:34 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,24 @@ typedef	struct	s_point
 	int			z_avg;
 }				t_point;
 
+typedef	struct		s_gpoint
+{
+	int				dx;
+	int				dy;
+	int				dz;
+	int				margin;
+	int				margin1;
+	int				signx;
+	int				signy;
+	int				signz;
+	int				x;
+	int				y;
+	int				z;
+	int				hex;
+	int				steps;
+	int				cur_step;
+}					t_gpoint;
+
 int     get_next_line(const int fd, char **line);
 int				ft_word_check(char *str, t_fpoint *iterate, t_point *dimensions);
 int				ft_numword(char *str, t_point *dimensions);
@@ -75,6 +93,11 @@ void        iterate_zero(t_fpoint *iterate);
 void        y_listadd(t_fpoint *begin, t_point *size);
 void            y_list_iterator(t_fpoint *begin, t_point *size);
 void        graphics_display(t_point *dimensions, t_fpoint *begin);
+void            ray_iterator(t_fpoint *begin, t_point *dimensions);
+void        pixel_ray_trace(t_fpoint *start, t_fpoint *stop, t_point *dimensions);
+void            ft_list_frch_scale(t_fpoint *begin, void (*f)(t_fpoint *begin,
+t_point *dimensions), t_point *dimensions);
+void            re_scale(t_fpoint *begin, t_point *dimensions);
 
 char	*ft_error(char *file_name);
 char            **ft_split(char *str, t_point *dimensions);

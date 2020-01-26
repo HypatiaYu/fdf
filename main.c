@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:32:29 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 11:00:32 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 11:49:48 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,28 @@ int		main(int argc, char **argv)
 	dimensions = malloc(sizeof(t_point));	
 	tile = ft_error(argv[1]);
 	begin = ft_set_dimensions(tile, dimensions);
-	y_listadd(begin, dimensions);
+	y_list_iterator(begin, dimensions);
 	dimensions = ft_set_scaling(dimensions, begin);
 	graphics_display(dimensions, begin);
 
-	/*int i;
+	int i;
 
 	i = 0;
+	begin = begin->nexty;
 	
 	while (begin)
     {
-		ft_putchar('a');
+		//ft_putchar('a');
 		ft_putnbr(i);
-		ft_putchar('y');
-        ft_putnbr(begin->y);
+		//ft_putchar('x');
+		//ft_putnbr(begin->x);
+		//ft_putchar('y');
+		ft_putstr("hex");
+        ft_putnbr(begin->hex);
+		//ft_putchar('\n');
 		begin = begin->nextx;
 		i++;
-	}*/
+	}
 	
 	//y_list_iterator(begin, dimensions);
 	//ft_putchar('e');
