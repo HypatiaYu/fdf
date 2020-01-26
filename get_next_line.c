@@ -6,11 +6,11 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 13:11:39 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/11 12:11:21 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/23 14:53:12 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "fdf.h"
 
 char			*ft_strjoin(char const *s1, char const *s2)
 {
