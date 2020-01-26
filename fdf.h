@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 14:12:48 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 15:15:10 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <fcntl.h>
 #include "minilibx/mlx.h"
 # include "libft/libft.h"
+#include <math.h>
+# define PI 3.14159265
+#include "keys.h"
 
 typedef struct		s_fpoint
 {
@@ -84,6 +87,8 @@ typedef	struct		s_gpoint
 int     get_next_line(const int fd, char **line);
 int				ft_word_check(char *str, t_fpoint *iterate, t_point *dimensions);
 int				ft_numword(char *str, t_point *dimensions);
+int		deal_key(int key, t_point *pointer);
+int		deal_key_trans(int key, t_point *pointer);
 
 void			ft_space(char *str, t_fpoint *iterate);
 void			ft_word(char *str, t_fpoint *iterate);
@@ -102,6 +107,13 @@ void            center(t_fpoint *list, t_point *dimensions);
 void    un_center(t_fpoint *begin, t_point *dimensions);
 void	minx_miny(t_fpoint *pointer, t_point *dimensions);
 void            translation_xyz(t_fpoint *list, t_point *dimensions);
+void            rotate_z(t_fpoint *begin, t_point *scaler);
+void            rotate_x(t_fpoint *begin, t_point *scaler);
+void            rotate_y(t_fpoint *begin, t_point *scaler);
+void            isometric_rotate(t_fpoint *begin, t_point *scaler);
+void        zero_scale(t_point *scale);
+void            NULL_x(t_fpoint *begin, t_point *size);
+void        NULL_y(t_fpoint *begin, t_point *size);
 
 char	*ft_error(char *file_name);
 char            **ft_split(char *str, t_point *dimensions);

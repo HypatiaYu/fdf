@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:45:47 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 11:51:31 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 15:15:04 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_fpoint		*x_move(t_fpoint *start, t_point *size)
 	{
 		tmp->nextx = tmp->next;
 		tmp = tmp->next;
-		//ft_putnbr(i);
 		i = i + 1;
 	}
 	start = tmp;
@@ -52,6 +51,7 @@ void			y_listadd(t_fpoint *begin, t_point *size)
 		//ft_putnbr(j);
 		j = j + 1;
 	}
+	//tmp->nexty = NULL;
 }
 
 void			NULL_x(t_fpoint *begin, t_point *size)
@@ -76,6 +76,28 @@ void			NULL_x(t_fpoint *begin, t_point *size)
 		j = j + 1;
 	}
 }
+
+void		NULL_y(t_fpoint *begin, t_point *size)
+{
+	int i;
+	int j;
+	t_fpoint *tmp;
+
+	i = 0;
+	j = 0;
+	tmp = begin;
+	while (j < size->y - 1)
+	{
+		tmp = tmp->nexty;
+		j++;
+	}
+	while (i < size->x)
+	{
+		tmp->nexty = NULL;
+		tmp = tmp->next;
+		i++;
+	}
+}
 void			y_list_iterator(t_fpoint *begin, t_point *size)
 {
 	
@@ -93,5 +115,6 @@ void			y_list_iterator(t_fpoint *begin, t_point *size)
 		i++;
 	}
 	NULL_x(begin, size);
+	NULL_y(begin, size);
 }
 
