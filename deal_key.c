@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 14:26:03 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/27 12:39:19 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/27 12:46:04 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void        zero_scale(t_point *scale)
 
 int		deal_key_trans(int key, t_point *pointer)
 {
-	mlx_clear_window(pointer->mlx, pointer->win);
 	if (key == KEY_A)
 		pointer->x_trans = 10;
 	if (key == KEY_B)
@@ -44,17 +43,11 @@ int		deal_key_trans(int key, t_point *pointer)
 	minx_miny(pointer->begin, pointer);
 	NULL_x(pointer->begin, pointer);
 	ft_list_frch_scale(pointer->begin, translation_xyz, pointer);
-	zero_scale(pointer);
-	NULL_x(pointer->begin, pointer);
-	NULL_y(pointer->begin, pointer);
-	ray_iterator(pointer->begin, pointer);
 	return (0);
 }
 
-int		deal_key(int key, t_point *pointer)
+int		deal_key_rescale(int key, t_point *pointer)
 {
-	zero_scale(pointer);
-	mlx_clear_window(pointer->mlx, pointer->win);
 	if (key == ESC)
 		exit(0);
 	if (key == KEY_N)
@@ -73,9 +66,18 @@ int		deal_key(int key, t_point *pointer)
 	ft_list_frch_scale(pointer->begin, re_scale, pointer);
 	minx_miny(pointer->begin, pointer);
 	ft_list_frch_scale(pointer->begin, center, pointer);
+	return (0);
+}
+
+int		deal_key(int key, t_point *pointer)
+{
 	zero_scale(pointer);
-	NULL_x(pointer->begin, pointer);
-	NULL_y(pointer->begin, pointer);
-	ray_iterator(pointer->begin, pointer);
+    mlx_clear_window(pointer->mlx, pointer->win);
+	deal_key_trans(key, pointer);
+	deal_key_rescale(key, pointer);
+	zero_scale(pointer);
+    NULL_x(pointer->begin, pointer);
+    NULL_y(pointer->begin, pointer);
+    ray_iterator(pointer->begin, pointer);
 	return (0);
 }
