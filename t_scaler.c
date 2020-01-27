@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 10:07:21 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 15:01:46 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 16:07:00 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void			ray_iterator(t_fpoint *begin, t_point *dimensions)
 
 	tmp = begin;
 	stop = tmp->nextx;
+	ft_putchar('x');
+	ft_putnbr(begin->x);
+	ft_putchar('y');
+	ft_putnbr(begin->y);
+	ft_putchar('\n');
 	while (tmp)
 	{
 		if (tmp->nextx != NULL)
@@ -108,9 +113,12 @@ void        graphics_display(t_point *dimensions, t_fpoint *begin)
     dimensions = ft_set_scaling(dimensions, begin);
     dimensions->mlx = mlx_ptr;
     dimensions->win = win_ptr;
-	ft_list_frch_scale(begin, center, dimensions);
-	//dimensions->x_trans = 300;
+	//ft_list_frch_scale(begin, center, dimensions);
+	dimensions->scalex = 30;
+	dimensions->scaley = 30;
+	dimensions->scalez = 30;
 	NULL_x(begin, dimensions);
+	ft_list_frch_scale(begin, re_scale, dimensions);
 	ft_list_frch_scale(begin, isometric_rotate, dimensions);
 	//ft_list_frch_scale(begin, un_center, dimensions);
 	mlx_key_hook(dimensions->win, deal_key_trans, dimensions);

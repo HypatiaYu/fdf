@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:32:29 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 14:41:25 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 16:01:51 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int		main(int argc, char **argv)
 	begin = ft_set_dimensions(tile, dimensions);
 	y_list_iterator(begin, dimensions);
 	dimensions = ft_set_scaling(dimensions, begin);
+	/*dimensions->scalex = 30;
+	dimensions->scaley = 30;
+	dimensions->scalez = 30;
+	ft_list_frch_scale(begin, re_scale, dimensions);
+	dimensions->x_trans = 100;
+	ft_list_frch_scale(begin, translation_xyz, dimensions);*/
 	graphics_display(dimensions, begin);
 //	int i;
 
@@ -37,24 +43,24 @@ int		main(int argc, char **argv)
 
     //while (begin)
 
-	//int i;
+	int i;
 
-	//i = 0;
+	i = 0;
 	//begin = begin->nexty;
-	
-	//while (begin)
-   // {
+
+	while (begin)
+    {
 		//ft_putchar('a');
 	//	ft_putnbr(i);
 		//ft_putchar('x');
-		//ft_putnbr(begin->x);
+		ft_putnbr(begin->x);
 		//ft_putchar('y');
 	//	ft_putstr("hex");
       //  ft_putnbr(begin->hex);
 		//ft_putchar('\n');
-	//	begin = begin->nextx;
-	//	i++;
-//	}
+		begin = begin->nexty;
+		i++;
+	}
 	
 	//y_list_iterator(begin, dimensions);
 	//ft_putchar('e');
