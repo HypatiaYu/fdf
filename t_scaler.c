@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 10:07:21 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 20:46:21 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/27 12:18:54 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void        graphics_display(t_point *dimensions, t_fpoint *begin)
 	NULL_x(begin, dimensions);
 	ft_list_frch_scale(begin, re_scale, dimensions);
 	ft_list_frch_scale(begin, isometric_rotate, dimensions);
-	//ft_list_frch_scale(begin, un_center, dimensions);
-	mlx_key_hook(dimensions->win, deal_key_trans, dimensions);
+	ft_list_frch_scale(begin, center, dimensions);
+	mlx_key_hook(dimensions->win, deal_key, dimensions);
 	ray_iterator(begin, dimensions);
     mlx_loop(mlx_ptr);
 }
