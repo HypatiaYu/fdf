@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:32:29 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 16:01:51 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 20:23:17 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ int		main(int argc, char **argv)
 	i = 0;
 	//begin = begin->nexty;
 
-	while (begin)
+	while (dimensions->begin)
     {
 		//ft_putchar('a');
 	//	ft_putnbr(i);
 		//ft_putchar('x');
-		ft_putnbr(begin->x);
+		ft_putnbr(dimensions->begin->x);
 		//ft_putchar('y');
 	//	ft_putstr("hex");
       //  ft_putnbr(begin->hex);
 		//ft_putchar('\n');
-		begin = begin->nexty;
+		dimensions->begin = dimensions->begin->nexty;
 		i++;
 	}
 	

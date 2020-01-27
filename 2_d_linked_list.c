@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 16:45:47 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 15:25:46 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 21:08:45 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_fpoint		*x_move(t_fpoint *start, t_point *size)
 		i = i + 1;
 	}
 	start = tmp;
-	start->nextx = NULL;
+	//start->nextx = NULL;
 	return (start);
 }
 
@@ -44,7 +44,7 @@ void			y_listadd(t_fpoint *begin, t_point *size)
 	while (j < size->y - 1)
 	{
 		start = x_move(start, size);
-		start->nextx = NULL;
+		//start->nextx = NULL;
 		tmp->nexty = start->next;
 		start = start->next;
 		tmp = start;
@@ -60,20 +60,17 @@ void			NULL_x(t_fpoint *begin, t_point *size)
 	int j;
 	t_fpoint *tmp;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	tmp = begin;
-	while (j < size->y)
+	while (++i < size->x - 1)
 	{
-		i = 0;
-		while  (i < size->x - 1)
-		{
-			tmp = tmp->next;
-			i = i + 1;
-		}
+		tmp = tmp->nextx;
+	}
+	while (++j < size->y - 1)
+	{
 		tmp->nextx = NULL;
-		tmp = tmp->next;
-		j = j + 1;
+		tmp = tmp->nexty;
 	}
 }
 

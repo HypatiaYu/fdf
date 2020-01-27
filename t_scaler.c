@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 10:07:21 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 16:07:00 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/26 20:46:21 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,12 @@ void			ray_iterator(t_fpoint *begin, t_point *dimensions)
 	t_fpoint	*stop;
 
 	tmp = begin;
-	stop = tmp->nextx;
-	ft_putchar('x');
-	ft_putnbr(begin->x);
-	ft_putchar('y');
-	ft_putnbr(begin->y);
-	ft_putchar('\n');
 	while (tmp)
 	{
-		if (tmp->nextx != NULL)
-		{
-			stop = tmp->nextx;
-			begin->x = begin->x + 1;
-			pixel_ray_trace(tmp, stop, dimensions);
-		}
-		if (tmp->nextx == NULL && tmp->nexty != NULL)
-		{
-			stop = tmp->nexty;
-			begin->y = begin->y + 1;
-			pixel_ray_trace(tmp, stop, dimensions);
-		}
-		if (tmp->nexty != NULL && tmp->nextx != NULL)
-		{
-			stop = tmp->nexty;
-			begin->y = begin->y + 1;
-			pixel_ray_trace(tmp, stop, dimensions);
-		}
+		if (tmp->nextx)
+			pixel_ray_trace(tmp, tmp->nextx, dimensions);
+		if (tmp->nexty)
+			pixel_ray_trace(tmp, tmp->nexty, dimensions);
 		tmp = tmp->next;
 	}
 }
