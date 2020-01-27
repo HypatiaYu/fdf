@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:20:01 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/27 12:20:28 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/27 12:38:15 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void    un_center(t_fpoint *begin, t_point *dimensions)
 	center_x = dimensions->win_x / 2;
 	center_y = dimensions->win_y / 2;
 	begin->x = begin->x - center_x + (dimensions->max_x - dimensions->min_x) / 2 -
-		dimensions->x_trans - dimensions->min_x;
+		dimensions->x_trans + dimensions->min_x;
 	begin->y = begin->y - center_y + (dimensions->max_y - dimensions->min_y) / 2 -
-		dimensions->y_trans - dimensions->min_y;
+		dimensions->y_trans + dimensions->min_y;
 }
 
 void            center(t_fpoint *list, t_point *dimensions)
