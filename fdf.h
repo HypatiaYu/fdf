@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/27 12:50:19 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/27 19:28:41 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-#include "minilibx/mlx.h"
+# include "minilibx/mlx.h"
 # include "libft/libft.h"
-#include <math.h>
-# define PI 3.14159265
-#include "keys.h"
+# include <math.h>
+# include "keys.h"
 
 typedef struct		s_fpoint
 {
