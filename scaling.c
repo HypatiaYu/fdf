@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 09:59:39 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/27 12:13:09 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/27 19:24:44 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void			rotate_z(t_fpoint *begin, t_point *scaler)
 
 	x = begin->x;
 	y = begin->y;
-	begin->x = (x) * cos((scaler->angle) * PI / 180) -
-	(y) * sin((scaler->angle) * PI / 180);
-	begin->y = (x) * sin((scaler->angle) * PI / 180) +
-	(y) * cos((scaler->angle) * PI / 180);
+	begin->x = (x) * cos(scaler->angle) -
+	(y) * sin(scaler->angle);
+	begin->y = (x) * sin(scaler->angle) +
+	(y) * cos(scaler->angle);
 }
 
 void			rotate_x(t_fpoint *begin, t_point *scaler)
@@ -39,10 +39,10 @@ void			rotate_x(t_fpoint *begin, t_point *scaler)
 
 	y = begin->y;
 	z = begin->z;
-	begin->y = (y) * cos((scaler->angle) * PI / 180) -
-	(z) * sin((scaler->angle) * PI / 180);
-	begin->z = (y) * sin((scaler->angle) * PI / 180) +
-	(z) * cos((scaler->angle) * PI / 180);
+	begin->y = (y) * cos(scaler->angle) -
+	(z) * sin(scaler->angle);
+	begin->z = (y) * sin(scaler->angle) +
+	(z) * cos(scaler->angle);
 }
 
 void			rotate_y(t_fpoint *begin, t_point *scaler)
@@ -52,10 +52,10 @@ void			rotate_y(t_fpoint *begin, t_point *scaler)
 
 	x = begin->x;
 	z = begin->z;
-	begin->x = (x) * cos((scaler->angle) * PI / 180) +
-	(z) * sin((scaler->angle) * PI / 180);
-	begin->z = (x) * (-1) * sin((scaler->angle) * PI / 180) +
-	(z) * cos((scaler->angle) * PI / 180);
+	begin->x = (x) * cos(scaler->angle) +
+	(z) * sin(scaler->angle);
+	begin->z = (x) * (-1) * sin(scaler->angle) +
+	(z) * cos(scaler->angle);
 }
 
 void			isometric_rotate(t_fpoint *begin, t_point *scaler)
@@ -67,6 +67,6 @@ void			isometric_rotate(t_fpoint *begin, t_point *scaler)
 	x = begin->x;
 	y = begin->y;
 	z = begin->z;
-	begin->x = (x - y) * cos(0.523599);
-	begin->y = -z + (x + y) * sin(0.523599);
+	begin->x = (x - y) * cos(scaler->angle);
+	begin->y = -z + (x + y) * sin(scaler->angle);
 }
