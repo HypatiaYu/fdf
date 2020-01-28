@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 14:43:11 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/26 15:33:28 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/28 11:28:32 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_fpoint		*ft_listadd_2(t_point *size, char **str, t_fpoint *iterate)
 			new = create_fpoint_node(iterate->x, iterate->y, ft_atoi(str[iterate->z]));
 			start = new;
 			iterate->x = iterate->x + 1;
+			iterate->z = iterate->z + 1;
 		}
 		while (iterate->x <= size->x - 1 && iterate->z < size->word)
 		{
