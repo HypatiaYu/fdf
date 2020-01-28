@@ -6,12 +6,11 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 14:26:03 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/27 12:46:04 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/27 19:14:56 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 void        zero_scale(t_point *scale)
 {
@@ -46,6 +45,45 @@ int		deal_key_trans(int key, t_point *pointer)
 	return (0);
 }
 
+int		deal_key_rotate(int key, t_point *pointer)
+{
+	ft_list_frch_scale(pointer->begin, un_center, pointer);
+	if (key == KEY_G)
+	{
+		pointer->angle = pointer->angle2 = -.523598;
+		ft_list_frch_scale(pointer->begin, rotate_z, pointer);
+	}
+	if (key == KEY_H)
+	{
+		pointer->angle = pointer->angle2 = .523598;
+		ft_list_frch_scale(pointer->begin, rotate_z, pointer);
+	}
+	if (key == KEY_I)
+    {
+        pointer->angle = pointer->angle2 = -.523598;
+        ft_list_frch_scale(pointer->begin, rotate_y, pointer);
+    }
+    if (key == KEY_J)
+    {
+        pointer->angle = pointer->angle2 = .523598;
+        ft_list_frch_scale(pointer->begin, rotate_y, pointer);
+    }
+	if (key == KEY_K)
+    {
+        pointer->angle = pointer->angle2 = -.523598;
+        ft_list_frch_scale(pointer->begin, rotate_x, pointer);
+    }
+    if (key == KEY_L)
+    {
+        pointer->angle = pointer->angle2 = .523598;
+        ft_list_frch_scale(pointer->begin, rotate_x, pointer);
+    }
+	ft_list_frch_scale(pointer->begin, minx_miny, pointer);
+    ft_list_frch_scale(pointer->begin, center, pointer);
+	return (0);
+
+}
+
 int		deal_key_rescale(int key, t_point *pointer)
 {
 	if (key == ESC)
@@ -64,7 +102,7 @@ int		deal_key_rescale(int key, t_point *pointer)
 		pointer->scaley = .75;
 	ft_list_frch_scale(pointer->begin, un_center, pointer);
 	ft_list_frch_scale(pointer->begin, re_scale, pointer);
-	minx_miny(pointer->begin, pointer);
+	ft_list_frch_scale(pointer->begin, minx_miny, pointer);
 	ft_list_frch_scale(pointer->begin, center, pointer);
 	return (0);
 }
@@ -75,6 +113,7 @@ int		deal_key(int key, t_point *pointer)
     mlx_clear_window(pointer->mlx, pointer->win);
 	deal_key_trans(key, pointer);
 	deal_key_rescale(key, pointer);
+	deal_key_rotate(key, pointer);
 	zero_scale(pointer);
     NULL_x(pointer->begin, pointer);
     NULL_y(pointer->begin, pointer);
