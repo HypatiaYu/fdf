@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 16:38:53 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/30 17:10:22 by hyu              ###   ########.fr       */
+/*   Updated: 2020/02/01 16:45:59 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void			assign_hex(t_fpoint *node, char *str, int *i)
 		num = num * 10 + str[*i] + '0';
 		*i = *i + 1;
 	}
-	node->hex = ft_atoi_base(num);
+	node->hex = 0xFFFFFF;
 }
 
 void			ft_ishex(char *str, t_fpoint *begin)

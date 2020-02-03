@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 10:07:21 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/29 16:19:33 by hyu              ###   ########.fr       */
+/*   Updated: 2020/02/01 18:40:08 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ t_point			*ft_set_scaling(t_point *dimensions, t_fpoint *begin)
 	return (dimensions);
 }
 
-t_gpoint		*assign_pixels(t_fpoint *start, t_fpoint *stop,
-				t_point *dimensions)
+t_gpoint		*assign_pixels(t_fpoint *start, t_fpoint *stop)
 {
 	t_gpoint	*pixels;
 
@@ -56,15 +55,11 @@ void			pixel_ray_trace(t_fpoint *start, t_fpoint *stop,
 {
 	t_gpoint	*pixels;
 
-	pixels = assign_pixels(start, stop, dimensions);
+	pixels = assign_pixels(start, stop);
 	while (pixels->x != stop->x || pixels->y != stop->y)
 	{
-		if (start->hex)
-			mlx_pixel_put(dimensions->mlx, dimensions->win, pixels->x,
-			pixels->y, start->hex);
-		else
-			mlx_pixel_put(dimensions->mlx, dimensions->win, pixels->x,
-			pixels->y, 0xFFFFFF);
+		mlx_pixel_put(dimensions->mlx, dimensions->win, pixels->x,
+		pixels->y, 0xFFFFFF);
 		pixels->margin1 = pixels->margin * 2;
 		if (pixels->margin1 > pixels->dy * -1)
 		{
@@ -77,12 +72,12 @@ void			pixel_ray_trace(t_fpoint *start, t_fpoint *stop,
 			pixels->y = pixels->y + pixels->signy;
 		}
 	}
+	free(pixels);
 }
 
 void			ray_iterator(t_fpoint *begin, t_point *dimensions)
 {
 	t_fpoint	*tmp;
-	t_fpoint	*stop;
 
 	tmp = begin;
 	while (tmp)

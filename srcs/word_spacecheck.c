@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 15:18:38 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/29 20:53:34 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/31 20:51:35 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int				ft_word_check(char *str, t_fpoint *iterate, t_point *dimensions)
 int				ft_numword(char *str, t_point *dimensions)
 {
 	t_fpoint	*iterate;
+	int			words;
 
 	iterate = malloc(sizeof(t_fpoint));
 	iterate->x = 0;
@@ -74,7 +75,9 @@ int				ft_numword(char *str, t_point *dimensions)
 	}
 	dimensions->y = iterate->y;
 	dimensions->word = iterate->z;
-	return (iterate->z);
+	words = iterate->z;
+	free(iterate);
+	return (words);
 }
 
 void			zero_scale(t_point *scale)
