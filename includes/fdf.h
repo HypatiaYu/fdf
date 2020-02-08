@@ -6,7 +6,7 @@
 /*   By: hyu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:50:41 by hyu               #+#    #+#             */
-/*   Updated: 2020/01/30 17:35:10 by hyu              ###   ########.fr       */
+/*   Updated: 2020/01/31 21:33:35 by hyu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,16 @@ void				null_y(t_fpoint *begin, t_point *size);
 
 char				*ft_error(char *file_name);
 char				**ft_split(char *str, t_point *dimensions);
+char				*ft_strjoina(char *s1, char const *s2);
+char				*ft_strjoinb(char *s1, char *s2);
 
 t_fpoint			*ft_listadd_2(t_point *size, char **str, t_fpoint *iterate);
-t_fpoint			*create_fpoint_node(t_fpoint *iterate, char **str, t_fpoint *new);
+t_fpoint			*create_fpoint_node(t_fpoint *iterate, char **str,
+					t_fpoint *new);
 t_fpoint			*ft_set_dimensions(char *tile, t_point *dimensions);
 t_fpoint			*x_move(t_fpoint *start, t_point *size);
 t_point				*ft_set_scaling(t_point *dimensions, t_fpoint *begin);
-t_gpoint			*assign_pixels(t_fpoint *start, t_fpoint *stop,
-					t_point *dimensions);
+t_gpoint			*assign_pixels(t_fpoint *start, t_fpoint *stop);
 
 # define BUFF_SIZE 500
 # define MAX_FD 4094
